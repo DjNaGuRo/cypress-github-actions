@@ -1,6 +1,11 @@
 stages:
   - test
-
+variables:
+      CYPRESS_CONFIG_FILE : "cypress.json"
+      CYPRESS_PROJECT_PATH : "."
+      CYPRESS_RECORD_KEY : ""
+      CYPRESS_RECORDER : "spec"
+      ADDITIONAL_OPTIONS : ""
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
@@ -8,7 +13,8 @@ cache:
     - .npm/
 
 test:
-  image: cypress/browsers:node12.14.1-chrome85-ff81
+  #image: cypress/browsers:node12.14.1-chrome85-ff81
+  image: node:16-buster
   stage: test
   script:
     # install dependencies
@@ -16,7 +22,14 @@ test:
     # start the server in the background
     - npm run start:ci &
     # run Cypress tests
-    - npx cypress run --browser firefox
+    #- npx cypress run --browser firefox
+    - >
+        if [${CYPRESS_RECORD_KEY} != ""]; then
+          export CYPRESS_RECORD_KEY=${CYPRESS_RECORD_KEY}
+          npx cypress run -P ${CYPRESS_PROJECT_PATH} -C ${CYPRESS_CONFIG_FILE} -r ${CYPRESS_RECORDER} ${ADDITIONAL_OPTIONS} --record
+        else
+          npx cypress run -P ${CYPRESS_PROJECT_PATH} -C ${CYPRESS_CONFIG_FILE} -r ${CYPRESS_RECORDER} ${ADDITIONAL_OPTIONS}
+        fi
   artifacts:
     when: always
     paths:
