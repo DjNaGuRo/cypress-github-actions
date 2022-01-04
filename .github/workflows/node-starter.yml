@@ -21,6 +21,20 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # A list of files, directories, and wildcard patterns to cache and restore
+          path: ~/.npm
+          # An explicit key for restoring and saving the cache
+          key: ${{runner.os}}-build-${{env.cache-name}}-${{hashFiles('**/package-lock.json')}}
+          # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
+          restore-keys: | # Optional
+            ${{runner.os}}-build-${{env.cache-name}}
+            ${{runner.os}}-build-
+            ${{runner.os}}-
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
