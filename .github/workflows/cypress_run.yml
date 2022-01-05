@@ -7,12 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     container: cypress/browsers:node16.5.0-chrome94-ff93
     env:
-      CYPRESS_CONFIG_FILE : "cypress.json"
-      CYPRESS_PROJECT_PATH : "."
-      CYPRESS_RECORD_KEY : "${{secrets.CYPRESS_RECORD_KEY}}"
-      CYPRESS_REPORTER : "spec"
-      CYPRESS_BASE_URL : "http;//localhost:8080"
-      ADDITIONAL_OPTIONS : ""
+      CYPRESS_CONFIG_FILE : 'cypress.json'
+      CYPRESS_PROJECT_PATH : '.'
+      CYPRESS_RECORD_KEY : ${{secrets.CYPRESS_RECORD_KEY}}
+      CYPRESS_REPORTER : 'spec'
+      CYPRESS_BASE_URL : 'http;//localhost:8080'
+      ADDITIONAL_OPTIONS : ''
 
     steps:
       - uses: actions/checkout@v2
@@ -34,6 +34,10 @@ jobs:
         run: npm ci
       - name: Install wait-on package
         run: npm i -g wait-on
+      - name: Check that env variables are read
+        run: |
+          echo "CYPRESS_BASE_URL: $CYPRESS_BASE_URL"
+          echo "Second echo CYPRESS_BASE_URL: ${{env.CYPRESS_BASE_URL}} "
       - name: Make Cypress wait until the server is up and available
         run: |
           if [ ! -z ${{env.CYPRESS_BASE_URL}} ]; then
