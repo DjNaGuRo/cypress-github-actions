@@ -33,7 +33,12 @@ jobs:
             ${{runner.os}}-
       - run: npm ci
       - run: npm run build --if-present
-      - run: npm test
+      - name: Run cypress tests and record results
+        run: npx cypress run --record
+        env:
+          CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+            
       - name: Archive Cypress outputs
         uses: actions/upload-artifact@v2
         with:
