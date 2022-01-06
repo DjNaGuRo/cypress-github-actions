@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: cypress/browsers:node16.5.0-chrome94-ff93
-      options: --user 1001 # Cypress images are owned by user ID 1001 and by default Cypress run test with root user
+      #options: --user 1001 # Cypress images are owned by user ID 1001 and by default Cypress run test with root user
     env:
       CYPRESS_CONFIG_FILE : ${{'cypress.json'}}
       CYPRESS_PROJECT_PATH : ${{'.'}}
