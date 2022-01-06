@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Cypress run E2E tests
 
 on: [push]
 
@@ -24,26 +24,18 @@ jobs:
           cache-name: cache-node-modules
         with:
           # A list of files, directories, and wildcard patterns to cache and restore
-          path: ~/.npm
+          path: |
+            ~/.npm
+            ~/.cache/Cypress
           # An explicit key for restoring and saving the cache
           key: ${{runner.os}}-build-${{env.cache-name}}-${{hashFiles('**/package-lock.json')}}
           # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
           restore-keys: | # Optional
             ${{runner.os}}-build-${{env.cache-name}}-
-      - name: Install dependencies
-        run: npm ci
       # - name: Update browserslist caniuse-lite
       #   run: npx browserslist@latest --update-db
       # - name: Install wait-on package
       #   run: npm i -g wait-on
-      - name: Make Cypress wait until the server is up and available
-        run: |
-          if [ ! -z ${{env.CYPRESS_BASE_URL}} ]; then
-              npm start --no-clipboard & wait-on $CYPRESS_BASE_URL
-          else 
-              echo "Variable CYPRESS_BASE_URL is MANDATORY. You must fill it !"
-              exit 1
-          fi
       - name: Run Cypress tests
         run: |
           if [ ! -z ${{env.CYPRESS_RECORD_KEY}} ]; then
@@ -54,7 +46,11 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-            
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          project: 
+
       - name: Archive Cypress outputs
         uses: actions/upload-artifact@v2
         with:
