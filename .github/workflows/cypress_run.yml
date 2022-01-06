@@ -85,7 +85,7 @@ jobs:
           retention-days: 15
       - name: Archive Cypress screenshots when job failed
         uses: actions/upload-artifact@v2
-        if: faillure()
+        if: failure()
         with:
           # Artifact name. Optional, default is artifact
           name: cypress-screenshots
