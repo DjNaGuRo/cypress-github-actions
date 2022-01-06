@@ -32,14 +32,10 @@ jobs:
             ${{runner.os}}-build-${{env.cache-name}}-
       - name: Install dependencies
         run: npm ci
-      - name: Update browserslist caniuse-lite
-        run: npx browserslist@latest --update-db
-      - name: Install wait-on package
-        run: npm i -g wait-on
-      - name: Check that env variables are read
-        run: |
-          echo "CYPRESS_BASE_URL: $CYPRESS_BASE_URL"
-          echo "Second echo CYPRESS_BASE_URL: ${{env.CYPRESS_BASE_URL}} "
+      # - name: Update browserslist caniuse-lite
+      #   run: npx browserslist@latest --update-db
+      # - name: Install wait-on package
+      #   run: npm i -g wait-on
       - name: Make Cypress wait until the server is up and available
         run: |
           if [ ! -z ${{env.CYPRESS_BASE_URL}} ]; then
