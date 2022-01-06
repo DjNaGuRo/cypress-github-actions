@@ -34,8 +34,8 @@ jobs:
             ${{runner.os}}-build-${{env.cache-name}}-
       # - name: Update browserslist caniuse-lite
       #   run: npx browserslist@latest --update-db
-      # - name: Install wait-on package
-      #   run: npm i -g wait-on
+      - name: Install wait-on package
+        run: npm i -g wait-on
       - name: Run Cypress tests
         run: |
           if [ ! -z ${{env.CYPRESS_RECORD_KEY}} ]; then
@@ -46,10 +46,10 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          project: 
+      # - name: Cypress run
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     project: 
 
       - name: Archive Cypress outputs
         uses: actions/upload-artifact@v2
