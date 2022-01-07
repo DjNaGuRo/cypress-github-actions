@@ -45,7 +45,8 @@ jobs:
         with:
           project: ${{env.CYPRESS_PROJECT_PATH}}
           config-file: ${{env.CYPRESS_CONFIG_FILE }}
-          record: true
+          reporter: ${{env.CYPRESS_REPORTER}}
+          record: ${{env.RECORD}}
           start: npm start 
           start-windows: npm run start:windows:server
           wait-on: ${{env.CYPRESS_BASE_URL}}
