@@ -45,7 +45,7 @@ jobs:
               exit 1
           fi
       - name: Create directories from repository
-        run: sudo mkdir -p $GITHUB_WORKSPACE/cypress/videos $GITHUB_WORKSPACE/cypress/screenshots
+        run: mkdir -p $GITHUB_WORKSPACE/cypress/videos $GITHUB_WORKSPACE/cypress/screenshots
       - name: Run Cypress tests
         run: |
           if [ ! -z ${{env.CYPRESS_RECORD_KEY}} ]; then
