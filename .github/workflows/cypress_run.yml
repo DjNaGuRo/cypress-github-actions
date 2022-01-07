@@ -13,7 +13,7 @@ jobs:
       CYPRESS_PROJECT_PATH : ${{'.'}}
       CYPRESS_RECORD_KEY : ${{secrets.CYPRESS_RECORD_KEY}}
       CYPRESS_REPORTER : ${{ 'spec' }}
-      CYPRESS_BASE_URL : ${{'http://localhost:8080'}}
+      CYPRESS_BASE_URL : ${{http://localhost:8080}}
       ADDITIONAL_OPTIONS : ${{''}}
       RECORD: ${{ false }}
 
