@@ -14,8 +14,8 @@ jobs:
       CYPRESS_RECORD_KEY : ${{secrets.CYPRESS_RECORD_KEY}}
       CYPRESS_REPORTER : ${{ 'spec' }}
       CYPRESS_BASE_URL : http://localhost:8080
-      #ADDITIONAL_OPTIONS : ${{'record=true,quiet=true,headed=true'}}
-      CYPRESS_RECORD: ${{ false }}
+      CYPRESS_ENV : ${{'record=true,quiet=true,headed=true'}}
+      #CYPRESS_RECORD: ${{ false }}
 
     steps:
       - uses: actions/checkout@v2
@@ -33,18 +33,17 @@ jobs:
           # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
           restore-keys: | # Optional
             ${{runner.os}}-build-${{env.cache-name}}-
-      - name: Run Cypress tests
-        run: |
-          if [ ! -z ${{env.CYPRESS_RECORD_KEY}} ]; then
-              export CYPRESS_RECORD=${{ true }}
-              echo "New CYPRESS_RECORD value $CYPRESS_RECORD"
-          fi
+      # - name: Run Cypress tests
+      #   run: |
+      #     if [ ! -z ${{env.CYPRESS_RECORD_KEY}} ]; then
+      #         export CYPRESS_RECORD=${{ true }}
+      #         echo "New CYPRESS_RECORD value $CYPRESS_RECORD"
+      #     fi
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
           project: ${{env.CYPRESS_PROJECT_PATH}}
           config-file: ${{env.CYPRESS_CONFIG_FILE }}
-          env: ${{env.ADDITIONAL_OPTIONS}}
           start: npm start 
           start-windows: npm run start:windows:server
           wait-on: ${{env.CYPRESS_BASE_URL}}
