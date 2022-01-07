@@ -44,6 +44,10 @@ jobs:
               echo "Variable CYPRESS_BASE_URL is MANDATORY. You must fill it !"
               exit 1
           fi
+      - name: Copy directories from repository
+        run: |
+          sudo mkdir ~/cypress/videos
+          sudo mkdir ~/cypress/screenshots
       - name: Run Cypress tests
         run: |
           if [ ! -z ${{env.CYPRESS_RECORD_KEY}} ]; then
