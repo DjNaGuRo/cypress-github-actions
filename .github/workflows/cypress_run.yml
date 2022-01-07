@@ -36,7 +36,7 @@ jobs:
       - name: Run Cypress tests
         run: |
           if [ ! -z ${{env.CYPRESS_RECORD_KEY}} ]; then
-              export RECORD=true
+              export RECORD=${{ true }}
               echo "New RECORD value $RECORD"
           fi
       - name: Cypress run
