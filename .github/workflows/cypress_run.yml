@@ -24,7 +24,9 @@ jobs:
           cache-name: cache-node-modules
         with:
           # A list of files, directories, and wildcard patterns to cache and restore
-          path: ~/.npm
+          path: |
+            ~/.npm
+            ~/.cache/Cypress
           # An explicit key for restoring and saving the cache
           key: ${{runner.os}}-build-${{env.cache-name}}-${{hashFiles('**/package-lock.json')}}
           # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
@@ -32,14 +34,8 @@ jobs:
             ${{runner.os}}-build-${{env.cache-name}}-
       - name: Install dependencies
         run: npm ci
-      - name: Update browserslist caniuse-lite
-        run: npx browserslist@latest --update-db
       - name: Install wait-on package
         run: npm i -g wait-on
-      - name: Check that env variables are read
-        run: |
-          echo "CYPRESS_BASE_URL: $CYPRESS_BASE_URL"
-          echo "Second echo CYPRESS_BASE_URL: ${{env.CYPRESS_BASE_URL}} "
       - name: Make Cypress wait until the server is up and available
         run: |
           if [ ! -z ${{env.CYPRESS_BASE_URL}} ]; then
@@ -65,7 +61,7 @@ jobs:
           # Artifact name. Optional, default is artifact
           name: cypress-outputs
           path: |
-            cypress/videos/**/*.mp4
-            cypress/screenshots/**/*.png
+            cypress/videos/
+            cypress/screenshots/
           if-no-files-found: error
           retention-days: 15
