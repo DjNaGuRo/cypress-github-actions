@@ -46,6 +46,8 @@ jobs:
           project: ${{env.CYPRESS_PROJECT_PATH}}
           config-file: ${{env.CYPRESS_CONFIG_FILE }}
           record: true
+          start: npm start 
+          start-windows: npm run start:windows:server
           wait-on: ${{env.CYPRESS_BASE_URL}}
           #wait-on-timeout: 420
         env:
