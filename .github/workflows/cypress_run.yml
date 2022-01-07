@@ -14,7 +14,7 @@ jobs:
       CYPRESS_RECORD_KEY : ${{secrets.CYPRESS_RECORD_KEY}}
       CYPRESS_REPORTER : ${{ 'spec' }}
       CYPRESS_BASE_URL : http://localhost:8080
-      ADDITIONAL_OPTIONS : record:true,quiet:true,headed:true
+      ADDITIONAL_OPTIONS : ${{'record=true,quiet=true,headed=true'}}
       #RECORD: ${{ false }}
 
     steps:
