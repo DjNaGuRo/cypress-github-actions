@@ -36,11 +36,6 @@ jobs:
         run: npm ci
       - name: Install wait-on package
         run: npm i -g wait-on
-      - name: Create directories from repository
-        #run: mkdir -p $GITHUB_WORKSPACE/cypress/videos $GITHUB_WORKSPACE/cypress/screenshots
-        run: |
-          apt install sudo
-          sudo mkdir -p 777 $GITHUB_WORKSPACE/cypress/videos $GITHUB_WORKSPACE/cypress/screenshots
       - name: Make Cypress wait until the server is up and available
         run: |
           if [ ! -z ${{env.CYPRESS_BASE_URL}} ]; then
