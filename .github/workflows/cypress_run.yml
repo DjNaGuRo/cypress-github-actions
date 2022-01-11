@@ -55,13 +55,21 @@ jobs:
           CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
             
-      - name: Archive Cypress outputs
+      - name: Archive Cypress videos
         uses: actions/upload-artifact@v2
+        if: always() 
         with:
           # Artifact name. Optional, default is artifact
-          name: cypress-outputs
-          path: |
-            cypress/videos/
-            cypress/screenshots/
-          if-no-files-found: warning
+          name: cypress-videos
+          path: cypress/videos
+          if-no-files-found: error
+          retention-days: 15
+      - name: Archive Cypress screenshots when job failed
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          # Artifact name. Optional, default is artifact
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: error
           retention-days: 15
