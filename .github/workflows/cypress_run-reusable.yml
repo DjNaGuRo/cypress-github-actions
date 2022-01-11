@@ -1,7 +1,6 @@
 name: Cypress run reusable workflow
 
 on: 
-  push:
   workflow_call:
     inputs:
       CYPRESS_CONFIG_FILE:
