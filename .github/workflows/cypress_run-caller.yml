@@ -5,3 +5,5 @@ jobs:
     uses: DjNaGuRo/cypress-github-actions/.github/workflows/cypress_run-reusable.yml
     with:
       CYPRESS_BASE_URL : http://localhost:8080
+    secrets:
+      CYPRESS_RECORD_KEY: ${{secrets.CYPRESS_RECORD_KEY}}
