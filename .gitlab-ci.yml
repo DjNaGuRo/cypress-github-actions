@@ -15,10 +15,14 @@ cypress_run:
       CYPRESS_CONFIG_FILE : "cypress.json"
       CYPRESS_PROJECT_PATH : "."
       CYPRESS_RECORD_KEY : ""
-      CYPRESS_REPORTER : "spec"
+      CYPRESS_REPORTER : $reporter
       CYPRESS_BASE_URL : ""
-      ADDITIONAL_OPTIONS : ""
+      ADDITIONAL_OPTIONS : $options
 
+    parallel:
+      matrix:
+        - reporter: ['spec', 'junit', 'teamcity']
+          options: ['', '--parallel']
     script:
       # install dependencies
       - npm ci
