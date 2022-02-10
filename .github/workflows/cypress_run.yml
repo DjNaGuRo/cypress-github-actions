@@ -7,20 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        record-key: ['', "${{secrets.CYPRESS_RECORD_KEY}}"]
         reporter: ['spec', 'junit', 'teamcity']
         options: ['', '--parallel']
         exclude: 
-          - record-key: "${{secrets.CYPRESS_RECORD_KEY}}"
+          - reporter: ['junit', 'teamcity']
             options: ''
-            reporter: 'junit'
     #container: 
     #  image: cypress/browsers:node16.5.0-chrome94-ff93
       #options: --user 1001 # Cypress images are owned by user ID 1001 and by default Cypress run test with root user
     env:
       CYPRESS_CONFIG_FILE : ${{'cypress.json'}}
       CYPRESS_PROJECT_PATH : ${{'.'}}
-      CYPRESS_RECORD_KEY : ${{ matrix.record-key }}
+      CYPRESS_RECORD_KEY : ${{secrets.CYPRESS_RECORD_KEY}}
       CYPRESS_REPORTER : ${{ matrix.reporter }}
       CYPRESS_BASE_URL : ${{'http://localhost:8080'}}
       ADDITIONAL_OPTIONS : ${{ matrix.options }}
